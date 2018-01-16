@@ -1,26 +1,26 @@
 package main
 
 import (
-  	"fmt"
-  	"math"
+    "fmt"
+    "math"
 )
 
 func Sqrt(x float64) float64 {
     // 定义误差标准
-  	eps := 0.0001
-  	result := float64(x)
+    eps := 0.0001
+    result := float64(x)
 
-  	for true {
+    for true {
     		lastValue := result
     		result = result - (result * result - x) / (2 * result)
     		if math.Abs(result - lastValue) < eps {
     			break
     		}
-  	}
+    }
 
-  	return result
+    return result
 }
 
 func main() {
-	 fmt.Println(Sqrt(2))
+    fmt.Println(Sqrt(2))
 }
