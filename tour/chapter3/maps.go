@@ -17,5 +17,5 @@ func main() {
         40.68433, -74.39967,
     }
 
-    fmt.PrintLn(m["Bell Labs"])
+    fmt.Println(m["Bell Labs"])
 }
