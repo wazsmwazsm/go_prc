@@ -5,15 +5,16 @@ import "fmt"
 func main() {
   	m := make(map[string]int)
 
-  	m["Answer"] = 42
-  	fmt.Println("The value:", m["Answer"])
+    // 修改 map
+    m["Answer"] = 42
+    fmt.Println("The value:", m["Answer"])
+    m["Answer"] = 48
+    fmt.Println("The value:", m["Answer"])
+    // 删除元素
+    delete(m, "Answer")
+    fmt.Println("The value:", m["Answer"])
 
-  	m["Answer"] = 48
-  	fmt.Println("The value:", m["Answer"])
-
-  	delete(m, "Answer")
-  	fmt.Println("The value:", m["Answer"])
-
-  	v, ok := m["Answer"]
-  	fmt.Println("The value:", v, "Present?", ok)
+    // 获取值，检查键是否存在
+    v, ok := m["Answer"]
+    fmt.Println("The value:", v, "Present?", ok)
 }
