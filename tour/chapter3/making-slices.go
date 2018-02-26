@@ -11,6 +11,8 @@ func main() {
   	printSlice("c", c)
     // cap(d) 为 3 请参考这里
     // https://studygolang.com/articles/4879
+    // 由于 slice 进行切片后引用的任然是一个数组
+    // 引用首指针后移，容量变小 b[:2] 这样的容量不变
   	d := c[2:5]
   	printSlice("d", d)
 }

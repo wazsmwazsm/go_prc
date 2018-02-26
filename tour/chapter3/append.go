@@ -17,6 +17,14 @@ func main() {
     // 可以同时追加多个元素
     a = append(a, 2, 3, 4)
   	printSlice("a", a)
+
+    // 追加另一个切片
+    b := []string{"John", "Paul"}
+    c := []string{"George", "Ringo", "Pete"}
+    // 使用 ... 结构 slice 为参数
+    b = append(b, c...)
+
+    fmt.Println(b)
 }
 
 func printSlice(s string, x []int) {
