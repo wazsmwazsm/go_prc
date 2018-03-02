@@ -7,6 +7,7 @@ type Person struct {
     Age  int
 }
 
+// Person 实现了 Stringer 接口, 重写了 String 方法
 func (p Person) String() string {
     return fmt.Sprintf("%v (%v years)", p.Name, p.Age)
 }

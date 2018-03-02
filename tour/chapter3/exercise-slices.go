@@ -5,7 +5,7 @@ import (
     "math"
 )
 
-func Pic(dx, dy int) [][]oint8 {
+func Pic(dx, dy int) [][]uint8 {
     var s [][]uint8
 
     for i := 0; i < dy; i++ {
