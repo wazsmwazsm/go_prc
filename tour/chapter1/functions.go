@@ -33,6 +33,7 @@ func main() {
     fmt.Println(add(42, 13))
     fmt.Println(add2(42, 55))
     // 相当于直接声明且初始化 (要求变量的类型确定)
+    // 赋值之前，赋值语句右边的所有表达式将会先进行求值，然后再统一更新左边对应变量的值
     a, b := swap("hello", "world")
     fmt.Println(a, b)
     fmt.Println(split(17))

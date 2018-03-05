@@ -28,6 +28,7 @@ func Sqrt(x float64) float64 {
     z := x
     n := 0.0
     for math.Abs(n - z) > delta {
+        // 赋值之前，赋值语句右边的所有表达式将会先进行求值，然后再统一更新左边对应变量的值
         n, z = z, z - (z * z - x) / (2 * z)
     }
 
