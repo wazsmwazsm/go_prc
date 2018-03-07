@@ -11,7 +11,8 @@ func main()  {
     go sum(s[:len(s)/2], c)
     go sum(s[len(s)/2:], c)
 
-    // 注意要一个 goroutine 中发数据，另一个 goroutine 中取数据
+    // 注意
+    // 在非 buffer channel 中要一个 goroutine 中发数据，另一个 goroutine 中取数据
     // 不然 channel 会一直阻塞等待
     // 默认情况下，发送和接收操作在另一端准备好之前都会阻塞。
     x, y := <-c, <-c // 从 c 中接受
