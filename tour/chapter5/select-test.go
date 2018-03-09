@@ -52,25 +52,25 @@ func main() {
     ch := make(chan int)
 
     go func() {
-      i := 0
-      for {
-         i++
-         ch <- i
-      }
-      close(ch)
+        i := 0
+        for {
+            i++
+            ch <- i
+        }
+        close(ch)
     }()
 
     for i := range ch {
         // i = i
         if i == 200 {
-          // 尝试执行 select 分支
-          ch2 <- i
-          ch2 <- i
+            // 尝试执行 select 分支
+            ch2 <- i
+            ch2 <- i
         }
         // 退出和主 goroutine 的同步
         if i == 50000 {
-          fmt.Println(ct) // 查看第一个 goroutine 中 for 循环了几次
-          break
+            fmt.Println(ct) // 查看第一个 goroutine 中 for 循环了几次
+            break
         }
     }
 }
