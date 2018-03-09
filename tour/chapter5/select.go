@@ -10,6 +10,7 @@ func fibonacci(c, quit chan int) {
     			x, y = y, x+y
     		case <-quit:
     			fmt.Println("quit")
+          // 如果要 break for 的话, 使用 break 标签 到外层
     			return
     		}
   	}
