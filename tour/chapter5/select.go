@@ -8,7 +8,7 @@ func fibonacci(c, quit chan int) {
     		select {
     		case c <- x:
     			  x, y = y, x+y
-    		case <-quit:
+    		case <- quit:
       			fmt.Println("quit")
             // 如果要 break for 的话, 使用 break 标签 到外层
       			return
@@ -21,7 +21,7 @@ func main() {
   	quit := make(chan int)
   	go func() {
     		for i := 0; i < 10; i++ {
-    			  fmt.Println(<-c)
+    			  fmt.Println(< - c)
     		}
     		quit <- 0
   	}()
