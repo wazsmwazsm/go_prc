@@ -21,6 +21,7 @@ func (c *SafeCounter) Inc(key string) {
 }
 // Value 返回给定 key 的计数器的当前值。
 func (c *SafeCounter) Value(key string) int {
+	// 保证互斥锁一定会被解锁
 	defer c.mux.Unlock()
 
 	c.mux.Lock()
