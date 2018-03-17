@@ -1,5 +1,4 @@
-// 项目 https://github.com/bwmarrin/snowflake 的练习
-// 生成并发安全的 snowflakeID
+// 生成并发安全的 twitter snowflake ID
 
 package main
 
@@ -14,12 +13,13 @@ const (
 	nodeBits  uint8 = 10
 	stepBits  uint8 = 12
 	nodeMax   int64 = -1 ^ (-1 << nodeBits) 
-	stepMask  int64 = -1 ^ (-1 << stepBits)
+	stepMax   int64 = -1 ^ (-1 << stepBits)
 	timeShift uint8 = nodeBits + stepBits
 	nodeShift uint8 = stepBits
 )
 
-var Epoch init64 = 1288834974657 // timestamp 2006-03-21:20:50:14 GMT
+// 起始时间戳
+var Epoch int64 = 1288834974657 // timestamp 2006-03-21:20:50:14 GMT
 
 // ID 结构
 type ID int64
@@ -33,7 +33,7 @@ type Node struct {
 }
 
 // 生成、返回唯一 snowflake ID
-func (n, *Node) Generate() ID {
+func (n *Node) Generate() ID {
 	
 	n.mu.Lock() // 保证并发安全, 加锁
 	defer n.mu.Unlock() // 解锁
@@ -43,13 +43,13 @@ func (n, *Node) Generate() ID {
 
 	if n.timestamp == now {
 		// step 步进 1 
-		n.step = (n.step + 1) & stepMask // & stepMask 用来防止 step 用完时进位
+		n.step = n.step + 1
 
 		// 当前 step 用完
-		if n.step == 0 {
+		if n.step > stepMax {
 			// 等待本毫秒结束
 			for now <= n.timestamp {
-				now := time.Now().UnixNano() / 1e6
+				now = time.Now().UnixNano() / 1e6
 			}
 		}
 
@@ -66,8 +66,42 @@ func (n, *Node) Generate() ID {
 }
 
 func main() {
+	// 测试脚本
 
-	
+	// 生成节点序号
+	node, err := NewNode(1)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	ch := make(chan ID)
+	count := 10000
+	// 并发 count 个 goroutine 进行 snowflake ID 生成
+	for i := 0; i < count; i++ {
+		go func() {
+			id := node.Generate()
+			ch <- id
+		}()
+	}	
+		
+	defer close(ch)
+
+	m := make(map[ID]int)
+	for i := 0; i < count; i++  {
+		id := <- ch
+		// 如果 map 中存在为 id 的 key, 说明生成的 snowflake ID 有重复
+		_, ok := m[id]
+		if ok {
+			fmt.Printf("ID is not unique!\n")
+			return
+		}
+		// 将 id 作为 key 存入 map
+		m[id] = i
+	}
+	// 成功生成 snowflake ID
+	fmt.Println("All ", count, " snowflake ID generate successed!\n")
 }
 
 // 生成一个新的 Node 类型变量
