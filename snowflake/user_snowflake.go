@@ -18,7 +18,7 @@ const (
 	nodeShift uint8 = stepBits
 )
 
-// 起始时间戳
+// 起始时间戳 (毫秒数显示)
 var Epoch int64 = 1288834974657 // timestamp 2006-03-21:20:50:14 GMT
 
 // ID 结构
@@ -43,7 +43,7 @@ func (n *Node) Generate() ID {
 
 	if n.timestamp == now {
 		// step 步进 1 
-		n.step = n.step + 1
+		n.step ++
 
 		// 当前 step 用完
 		if n.step > stepMax {
@@ -68,7 +68,7 @@ func (n *Node) Generate() ID {
 func main() {
 	// 测试脚本
 
-	// 生成节点序号
+	// 生成节点实例
 	node, err := NewNode(1)
 
 	if err != nil {
