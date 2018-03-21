@@ -66,7 +66,7 @@ func (n *Node) Generate() ID {
 }
 
 func main() {
-	// 测试脚本
+	// 测试
 
 	// 生成节点实例
 	node, err := NewNode(1)
