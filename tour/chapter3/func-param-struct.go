@@ -29,7 +29,7 @@ func changeStructPointer(v *Vertex)  {
         []string{"1", "b", "3"},
     }
 }
-// 修改结构体指针的指向，使它执行另一个结构体数据
+// 修改结构体指针的指向，使它指向另一个结构体数据
 func changeStructPointerChangeValue(v *Vertex)  {
     *v = Vertex{
         []string{"1", "b", "3"},

@@ -16,7 +16,7 @@ func changeMapElement(m map[int]string)  {
 func changeMapPointer(m *map[int]string)  {
     m = nil
 }
-// 修改 map 指针的指向，使它执行另一个 map 数据
+// 修改 map 指针的指向，使它指向另一个 map 数据
 func changeMapPointerChangeValue(m *map[int]string)  {
     *m = map[int]string {
       1: "a",
