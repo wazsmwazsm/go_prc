@@ -1,0 +1,19 @@
+package main
+
+import "fmt"
+
+func main() {
+	str := "Go is a beautiful language!"
+	fmt.Printf("The length of str is: %d\n", len(str))
+	for ix :=0; ix < len(str); ix++ {
+		fmt.Printf("Character on position %d is: %c \n", ix, str[ix])
+	}
+	
+	str2 := "日本語"
+	fmt.Printf("The length of str2 is: %d\n", len(str2))
+	// 注意这里 for 循环字符串读取的是 ascii 码
+	// 使用 for range 能够自动根据 UTF-8 规则识别 Unicode 编码的字符
+	for ix :=0; ix < len(str2); ix++ {
+		fmt.Printf("Character on position %d is: %c \n", ix, str2[ix])
+	}
+}
