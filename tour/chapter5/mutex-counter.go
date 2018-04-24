@@ -13,6 +13,7 @@ type SafeCounter struct {
 // Inc 增加给定 key 的计数器的值
 func (c *SafeCounter) Inc(key string) {
 	// Lock 之后同一时刻只有一个 goroutine 能访问 c.v
+	// 使用 go run -race source.go 来判断是否有数据竞争
 	c.mux.Lock()
 	// 操作数据
 	c.v[key]++
