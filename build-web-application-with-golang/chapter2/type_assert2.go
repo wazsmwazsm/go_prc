@@ -26,6 +26,7 @@ func main() {
 
 	for index, el := range list {
 		// 使用 switch 选择类型
+		// 注意，el 必须是空接口值才行
 		switch value := el.(type) {
 		case int:
 			fmt.Printf("list[%d] is an int and its value is %d\n", index, value)
