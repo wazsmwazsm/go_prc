@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"regexp"
+	"strconv"
 )
 
 func main() {
@@ -37,8 +39,30 @@ func submit(w http.ResponseWriter, r *http.Request) {
 		log.Println(t.Execute(w, nil))
 	} else {
 		r.ParseForm()
+		
+		// 为空验证
+
+		// if len(r.Form["username"][0]) == 0 { // 这种可以取 map 值
+		// r.Form.Get()只能获取单个的值
+		if len(r.Form.get("username")) == 0 { 
+			fmt.Fprintf(w, "用户名为空！") 
+		}
+
+		if len(r.Form.get("password")) == 0 {
+			fmt.Fprintf(w, "密码为空！") 
+		}
+
+		// 数字验证
+		age, err := strconv.Atoi(r.Form.get("age")) 
+		if err != nil {
+			fmt.Fprintf(w, "年龄必须是数字") 
+		}
+
+		if age > 100 || age <= 0 {
+			fmt.Fprintf(w, "年龄范围必须在 1~100") 
+		}
+
 		// 
-		fmt.Println("username:", r.Form["username"])
-		fmt.Println("password:", r.Form["password"])
+
 	}
 }
