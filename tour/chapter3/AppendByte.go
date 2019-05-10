@@ -16,7 +16,7 @@ func AppendByte(slice []byte, data ...byte) []byte {
     n := m + len(data)
     // 如果需要，扩充
     if n > cap(slice) {
-        newSlice := make([]byte, (n + 1) * 2)
+        newSlice := make([]byte, n * 2) 
         copy(newSlice, slice)
         slice = newSlice
     }
