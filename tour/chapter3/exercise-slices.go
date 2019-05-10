@@ -2,7 +2,6 @@ package main
 
 import (
     "golang.org/x/tour/pic"
-    "math"
 )
 
 // func Pic(dx, dy int) [][]uint8 {
