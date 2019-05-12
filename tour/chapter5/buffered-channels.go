@@ -9,6 +9,7 @@ func main()  {
     ch <- 2
     // ch <- 3 // 死锁
     fmt.Println(<-ch)
-	  fmt.Println(<-ch)
+      fmt.Println(<-ch)
+    // close(ch) // 这里关闭后，下面语句就不会死锁
     fmt.Println(<-ch) // 缓冲区为空时, 阻塞, 死锁
 }
