@@ -6,6 +6,7 @@ func fibonacci(c, quit chan int) {
   	x, y := 0, 1
   	for {
     		select {
+			// case 为发送者时, 每次执行 select 都会执行此分支，在数据未被读取时 select 阻塞
     		case c <- x:
     			  x, y = y, x + y
     		case <- quit:
@@ -21,7 +22,7 @@ func main() {
   	quit := make(chan int)
   	go func() {
     		for i := 0; i < 10; i++ {
-    			  fmt.Println(< - c)
+    			  fmt.Println(<- c)
     		}
     		quit <- 0
   	}()

@@ -35,7 +35,7 @@ func main() {
 
           select {
           case ch1 <- 1:
-              fmt.Println("ch1 pop one element")
+              fmt.Println("ch1 push one element")
           case <- ch2:
               fmt.Println("ch2 pop one element")
           // default:
@@ -47,6 +47,9 @@ func main() {
 
     }()
 
+    // 读取 ch1
+    df := <- ch1
+    fmt.Println("df",df)
 
     // 开另一个 goroutine 一直和主 goroutine 同步数据, 防止主 goroutine 执行完毕
     ch := make(chan int)
@@ -69,7 +72,7 @@ func main() {
         }
         // 退出和主 goroutine 的同步
         if i == 50000 {
-            fmt.Println(ct) // 查看第一个 goroutine 中 for 循环了几次
+            fmt.Println("ct", ct) // 查看第一个 goroutine 中 for 循环了几次
             break
         }
     }
