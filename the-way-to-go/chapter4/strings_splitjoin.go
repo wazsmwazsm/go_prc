@@ -22,4 +22,6 @@ func main() {
 	for _, v := range sl2 {
 		fmt.Printf("%s - ", v)
 	}
+	fmt.Println()
+	fmt.Println(strings.Join(sl2, "**"))
 }
