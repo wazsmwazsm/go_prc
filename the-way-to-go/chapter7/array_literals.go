@@ -9,6 +9,9 @@ func main() {
 	var arrKeyValue = [5]string{3: "Chris", 4: "Ron"}
 	// var arrKeyValue = []string{3: "Chris", 4: "Ron"}	//注：初始化得到的实际上是切片slice
 
+	b := arrKeyValue[3:] // 对数组切片操作，会生成一个切片
+	fmt.Printf("b: %T, %v\n", b, b)
+
 	for i:=0; i < len(arrKeyValue); i++ {
 		fmt.Printf("Person at %d is %s\n", i, arrKeyValue[i])
 	}
