@@ -6,17 +6,17 @@ func main() {
 	s1 := []byte{1, 2, 4, 5}
 	fmt.Println(len(s1), cap(s1)) // 4 4
 
-	s1 = Append(s1, []byte{5, 1})
+	s1 = Append(s1, []byte{5, 1}...)
 	fmt.Println(s1, len(s1), cap(s1)) // [1 2 4 5 5 1] 6 12
 
-	s1 = Append(s1, []byte{12, 44, 3, 2, 7})
+	s1 = Append(s1, []byte{12, 44, 3, 2, 7}...)
 	fmt.Println(s1, len(s1), cap(s1)) // [1 2 4 5 5 1 12 44 3 2 7] 11 12
 
-	s1 = Append(s1, []byte{7, 8, 12})
+	s1 = Append(s1, []byte{7, 8, 12}...)
 	fmt.Println(s1, len(s1), cap(s1)) // [1 2 4 5 5 1 12 44 3 2 7 7 8 12] 14 28
 }
 
-func Append(slice, data []byte) []byte {
+func Append(slice []byte, data ...byte) []byte {
 	length := len(slice)
 	newLength := length + len(data)
 
