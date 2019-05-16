@@ -23,10 +23,5 @@ func RemoveStringSlice(slice []byte, start, end int) ([]byte, error) {
 		return nil, errors.New("Out of range!")
 	}
 
-	slice1, slice2 := slice[:start], slice[end + 1:]
-
-	newSlice := make([]byte, len(slice1)) // 给足 newSlice 长度方便 copy
-	copy(newSlice, slice1) // 这里要 copy，不要继续操作原 slice 的数组，防止数据无法被回收
-	newSlice = append(newSlice, slice2...)
-	return newSlice, nil
+	return append(slice[:start], slice[end + 1:]...), nil
 }
