@@ -18,6 +18,20 @@ func main() {
 		fmt.Printf("Key: %v, Value: %v / ", k, v)
 	}
 
+	keys := make([]string, len(barVal))
+	i := 0
+	for k, _ := range barVal {
+		keys[i] = k
+		i++
+	}
+
+	sort.Strings(keys)
+	fmt.Println()
+	fmt.Println("sorted:")
+
+	for _, v := range keys {
+		fmt.Printf("Key: %v, Value: %v / ", v, barVal[v])
+	}
 }
 
 
