@@ -16,16 +16,14 @@ func main() {
 	for k, v := range weekend {
 		fmt.Printf("%s : %s\n", k, v)
 	}	
-
-	value, ok := weekend["Thursday"]
-	if ok {
+	
+	if value, ok := weekend["Thursday"]; ok {
 		fmt.Println("存在 Thursday", value)
 	} else {
 		fmt.Println("不存在 Thursday")
 	}
 
-	value, ok = weekend["Hollyday"]
-	if ok {
+	if value, ok := weekend["Hollyday"]; ok {
 		fmt.Println("存在 Hollyday", value)
 	} else {
 		fmt.Println("不存在 Hollyday")
