@@ -1,3 +1,8 @@
+## 使用 go mod 
+1. 环境变量GOPATH不再用于解析imports包路径，即原有的GOPATH/src/下的包，通过import是找不到了。
+2. Go Module功能开启后，下载的包将存放与$GOPATH/pkg/mod路径
+3. $GOPATH/bin路径的功能依旧保持
+
 ## 环境变量设置（vendor 形式无需）
 GOPATH : 下面的 src（go mod 不用这个）、bin（go install 生成的可执行文件）、pkg（pkg/mod 存放 go install 下载的依赖）
 GOBIN : 设置为 $(GOPATH)/bin 就行
@@ -14,7 +19,7 @@ GOBIN : 设置为 $(GOPATH)/bin 就行
 1. 创建 main.go
 2. 运行 go mod init test 生成 go.mod 文件, 指定 module 名称
 3. 运行 go mod tidy 生成 require 依赖信息，生成 go.sum 文件
-4. go mod vendor 生成 vendor 目录, 将项目的依赖下载到 $(GOPATH)/pkg 中再移动到 vendor 中
+4. go mod vendor 生成 vendor 目录, 将项目的依赖下载到 $(GOPATH)/pkg/mod 中再移动到 vendor 中
 5. go build -mod=vendor 生成可执行文件到当前目录
 
 
