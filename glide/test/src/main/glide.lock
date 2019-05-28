@@ -1,0 +1,6 @@
+hash: 3f9e25705aeea8cf6a1cdbb65692cec4cf0f8f915bd9d104e106bc3ef7e23c40
+updated: 2019-05-28T16:17:49.873755+08:00
+imports:
+- name: github.com/wazsmwazsm/uc
+  version: 3d01ac5b3b62e9a8a7c14947973038de1d8db653
+testImports: []
