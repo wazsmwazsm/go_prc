@@ -18,8 +18,9 @@ func NewStack() *stack {
 
 func (s *stack) String() string {
 	var str string
-	for i := 0; i < LIMIT - 1; i++ {
-		str += "[" + strconv.Itoa(s.index) + ":" + strconv.Itoa(s.arr[i]) + "] "
+	str = "Stack head: " + strconv.Itoa(s.index) + " Stack Field: "
+	for i := 0; i < LIMIT; i++ {
+		str += "[" + strconv.Itoa(s.arr[i]) + "]"
 	} 
 
 	return str

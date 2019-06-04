@@ -1,6 +1,6 @@
 package stack
 
-const LIMIT = 4
+const LIMIT = 8
 
 type stackArr [LIMIT]int
 
