@@ -5,6 +5,10 @@ import (
 	"math"
 )
 
+type Magnitude interface {
+	Abs() float64
+}
+
 type Point struct {
 	x, y float64
 }
@@ -13,11 +17,11 @@ type Point3 struct {
 	x, y, z float64
 }
 
-func Abs(p *Point) float64 {
+func (p *Point) Abs() float64 {
 	return math.Sqrt(p.x * p.x + p.y * p.y)
 }
 
-func Scale(p *Point, s float64) {
+func (p *Point) Scale(s float64) {
 	p.x = p.x * s
 	p.y = p.y * s
 }
@@ -33,15 +37,14 @@ func (p *Point3) Scale(s float64) {
 }
 
 func main() {
-	point := Point{2.3, 1.1}
-	fmt.Println(Abs(&point))
-	Scale(&point, 4)
-	fmt.Println(point)
-	fmt.Println(Abs(&point))
+	var i Magnitude
+	point := &Point{2.3, 1.1}
+	i = point
+	fmt.Println(i.Abs())
+	
 
 	point3 := &Point3{1.2, 10.4, 6.5}
-	fmt.Println(point3.Abs())
-	point3.Scale(4)
-	fmt.Println(point3)
-	fmt.Println(point3.Abs())
+	i = point3
+	fmt.Println(i.Abs())
+	
 }

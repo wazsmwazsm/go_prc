@@ -9,7 +9,7 @@ type Point struct {
 	x, y float64
 }
 
-type Polar struct {
+type Point3 struct {
 	x, y, z float64
 }
 
@@ -22,11 +22,11 @@ func Scale(p *Point, s float64) {
 	p.y = p.y * s
 }
 
-func (p *Polar) Abs() float64 {
+func (p *Point3) Abs() float64 {
 	return math.Sqrt(p.x * p.x + p.y * p.y + p.z * p.z)
 }
 
-func (p *Polar) Scale(s float64) {
+func (p *Point3) Scale(s float64) {
 	p.x = p.x * s
 	p.y = p.y * s
 	p.z = p.z * s
@@ -39,9 +39,9 @@ func main() {
 	fmt.Println(point)
 	fmt.Println(Abs(&point))
 
-	polar := &Polar{1.2, 10.4, 6.5}
-	fmt.Println(polar.Abs())
-	polar.Scale(4)
-	fmt.Println(polar)
-	fmt.Println(polar.Abs())
+	point3 := &Point3{1.2, 10.4, 6.5}
+	fmt.Println(point3.Abs())
+	point3.Scale(4)
+	fmt.Println(point3)
+	fmt.Println(point3.Abs())
 }
