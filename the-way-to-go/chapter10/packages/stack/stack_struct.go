@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strconv"
 )
-
+// 顺序栈
 type stack struct {
 	index int
 	arr stackArr
