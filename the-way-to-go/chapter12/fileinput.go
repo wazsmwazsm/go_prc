@@ -17,7 +17,7 @@ func main() {
 	}
 	defer fd.Close()
 
-	reader := bufio.NewReader(fd)
+	reader := bufio.NewReader(fd) // 缓冲区
 	for {
 		inputString, readerError := reader.ReadString('\n')
 		fmt.Println(inputString)

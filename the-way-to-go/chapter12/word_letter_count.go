@@ -8,8 +8,7 @@ import (
 )
 
 func main() {
-	inputReader := bufio.NewReader(os.Stdin)
-	fmt.Println("Please enter something:")
+	inputReader := bufio.NewReader(os.Stdin) // 读取 stdin 到缓冲区
 	input, _ := inputReader.ReadString('S')
 	length := len(input) - strings.Count(input, "\r") - strings.Count(input, "\n")
 	wordCount := len(strings.Fields(input))
