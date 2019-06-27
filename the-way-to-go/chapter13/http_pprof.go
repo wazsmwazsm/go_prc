@@ -1,3 +1,4 @@
+// 访问 http://localhost:6060/debug/pprof/ 看调试信息
 package main
 
 import (
