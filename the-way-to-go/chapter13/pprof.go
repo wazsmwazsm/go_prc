@@ -1,3 +1,4 @@
+// go run pprof.go -cpuprofile=cpu.prof -memprofile=mem.prof
 package main
 
 import (
