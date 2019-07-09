@@ -42,5 +42,4 @@ func main() {
 		log.Println("Error in encoding json")
 	}
 
-
 }
