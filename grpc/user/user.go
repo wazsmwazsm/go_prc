@@ -1,8 +1,9 @@
 package user
 
 import (
-	"golang.org/x/net/context"
 	pb "grpctest/user/proto"
+
+	"golang.org/x/net/context"
 )
 
 type User struct {
@@ -20,7 +21,6 @@ var users = map[int32]User{
 }
 
 type UserService struct {
-
 }
 
 func (u *UserService) Get(ctx context.Context, in *pb.UserGetRequest) (*pb.UserGetResponse, error) {
@@ -33,7 +33,21 @@ func (u *UserService) Get(ctx context.Context, in *pb.UserGetRequest) (*pb.UserG
 	}, nil
 }
 
-func (u * UserService) GetList(in *pb.EmptyRequest, res pb.UserInfoService_GetListServer) (error) {
+func (u *UserService) GetList(ctx context.Context, in *pb.EmptyRequest) (*pb.UserGetListResponse, error) {
+	response := &pb.UserGetListResponse{}
+	for _, user := range users {
+		response.List = append(response.List, &pb.UserGetResponse{
+			Id:      user.Id,
+			Name:    user.Name,
+			Age:     user.Age,
+			Address: user.Address,
+		})
+	}
+
+	return response, nil
+}
+
+func (u *UserService) GetStream(in *pb.EmptyRequest, res pb.UserInfoService_GetStreamServer) error {
 
 	for _, user := range users {
 		res.Send(&pb.UserGetResponse{
