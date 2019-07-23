@@ -3,9 +3,11 @@ package main
 import (
 	"fmt"
 	"grpctest/user"
+
 	pb "grpctest/user/proto"
 
-	"golang.org/x/net/context"
+	"context"
+
 	"google.golang.org/grpc"
 )
 

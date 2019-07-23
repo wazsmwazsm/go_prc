@@ -3,7 +3,7 @@ package user
 import (
 	pb "grpctest/user/proto"
 
-	"golang.org/x/net/context"
+	"context"
 )
 
 type User struct {

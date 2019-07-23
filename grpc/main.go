@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
-	"google.golang.org/grpc"
+	"grpctest/user"
 	pb "grpctest/user/proto"
 	"net"
-	"grpctest/user"
-)
 
+	"google.golang.org/grpc"
+)
 
 func main() {
 	lis, err := net.Listen("tcp", ":50051")
