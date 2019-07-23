@@ -20,7 +20,6 @@ func main() {
 		select {
 		case <-timeout.C:
 			fmt.Println("Current request timeout, begin next request")
-			continue
 		case data := <-chData:
 			fmt.Println(string(data))
 		}
