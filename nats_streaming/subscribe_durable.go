@@ -32,8 +32,17 @@ func main() {
 	}
 	defer sub.Close()
 
+	// Durable subscribe
+	sub2, err := sc.Subscribe("bar", func(m *stan.Msg) {
+		ch <- *m
+	}, options...)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer sub2.Close()
+
 	for {
 		m := <-ch
-		fmt.Printf("%v %v %s\n", m.Sequence, m.Timestamp, m.Data)
+		fmt.Printf("%s %v %v %s\n", m.Subject, m.Sequence, m.Timestamp, m.Data)
 	}
 }
