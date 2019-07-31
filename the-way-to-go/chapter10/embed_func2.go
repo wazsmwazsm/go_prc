@@ -16,7 +16,7 @@ func (l *Log) String() string {
 
 type Customer struct {
 	Name string
-	Log // 嵌入 Log 结构
+	Log  // 嵌入 Log 结构
 }
 
 func (c *Customer) DLog() string {
