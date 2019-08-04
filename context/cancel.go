@@ -25,6 +25,10 @@ func work(ctx context.Context) {
 			fmt.Println("done")
 			return
 		default:
+			if deadline, ok := ctx.Deadline(); ok {
+				fmt.Println("deadline:", deadline)
+			}
+
 			fmt.Println("work")
 		}
 	}
