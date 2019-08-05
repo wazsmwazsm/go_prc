@@ -37,7 +37,7 @@ func request(ch chan []byte) {
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode == 503 { // 服务不可用
+	if resp.StatusCode == 504 { // 服务超时
 		return
 	}
 

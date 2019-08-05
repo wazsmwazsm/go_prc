@@ -31,7 +31,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	// select 阻塞 goroutine, hold TCP 连接
 	select {
 	case <-timeout.C:
-		w.WriteHeader(503)
+		w.WriteHeader(504)
 		fmt.Fprintln(w, "Timeout")
 	case data := <-chData:
 		fmt.Fprintf(w, "%s", data)
