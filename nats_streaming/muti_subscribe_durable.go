@@ -11,7 +11,7 @@ const clusterID = "eventbus"
 const clientID = "myIdsub"
 
 func main() {
-	sc, err := stan.Connect(clusterID, clientID, stan.NatsURL("nats://172.16.129.5:6222"))
+	sc, err := stan.Connect(clusterID, clientID, stan.NatsURL("nats://172.16.129.5:4222"))
 	if err != nil {
 		log.Fatal(err)
 	}

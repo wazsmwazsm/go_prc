@@ -11,9 +11,9 @@ const ClientID = "TestEventPub"
 const ChannelName = "test"
 
 var Servers = []string{
-	"nats://172.16.129.5:6222",
-	"nats://172.16.129.6:6222",
-	"nats://172.16.129.7:6222",
+	"nats://172.16.129.5:4222",
+	"nats://172.16.129.6:4222",
+	"nats://172.16.129.7:4222",
 }
 
 func main() {
