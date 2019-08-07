@@ -13,6 +13,7 @@ const TIMEOUT = 4
 func main() {
 	for {
 		chData := make(chan []byte)
+		// client 控制超时的问题在于，前端断掉连接后，后端程序还会执行
 		timeout := time.NewTimer(time.Duration(TIMEOUT) * time.Second)
 
 		go request(chData) // run request
