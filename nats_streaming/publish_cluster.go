@@ -8,7 +8,7 @@ import (
 
 const ClusterID = "eventbus"
 const ClientID = "TestEventPub"
-const ChannelName = "test.bar"
+const ChannelName = "test"
 
 var Servers = []string{
 	"nats://172.16.129.5:4222",
