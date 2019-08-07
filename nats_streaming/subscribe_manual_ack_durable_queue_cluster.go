@@ -24,15 +24,16 @@ var Servers = []string{
 	"nats://172.16.129.7:4222",
 }
 
-var ClientID = flag.String("clientid", "", "client id")
+var clientID = flag.String("clientid", "", "client id")
+var sleep = flag.Int64("sleep", 0, "sleep time")
 
 func main() {
 	flag.Parse()
-	if *ClientID == "" {
+	if *clientID == "" {
 		log.Fatal("client id is empty")
 	}
 	// connect nats streaming cluster
-	sc, err := stan.Connect(ClusterID, *ClientID, stan.NatsURL(strings.Join(Servers, ",")))
+	sc, err := stan.Connect(ClusterID, *clientID, stan.NatsURL(strings.Join(Servers, ",")))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -40,13 +41,19 @@ func main() {
 
 	ch := make(chan *stan.Msg)
 	msgHandler := func(m *stan.Msg) {
+		// 加入一个延迟, 开启手动 ack, 模拟 queue 模式中不同消费者可能 ack
+		// 次序不同导致 queue 中的消息被消费无法保证时间次序的场景
+		time.Sleep(time.Duration(*sleep) * time.Second)
+		m.Ack()
 		ch <- m
 	}
 	// queue Durable subscribe
 	// queue 的模式下，由于 server 会 pending 未 ack 的连接等待重新交付
 	// 所以没有办法保证整个 queue 的消费数据是顺序的
 	sub, err := sc.QueueSubscribe(ChannelName, QueueName, msgHandler,
-		stan.DurableName(DurableName), stan.AckWait(time.Second))
+		stan.DurableName(DurableName),
+		stan.SetManualAckMode(),
+	)
 	if err != nil {
 		log.Fatal(err)
 	}

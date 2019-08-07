@@ -12,7 +12,7 @@ const ClientID = "TestEventSub"
 
 // nats-streaming server 通过 clientId + channel + durableName 标示一个持久订阅（参考源码 server.go）
 const DurableName = "test"
-const ChannelName = "test.bar"
+const ChannelName = "test"
 
 var Servers = []string{
 	"nats://172.16.129.5:4222",
