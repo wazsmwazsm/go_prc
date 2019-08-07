@@ -3,8 +3,8 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"log"
 	_ "github.com/go-sql-driver/mysql"
+	"log"
 )
 
 func main() {
@@ -12,7 +12,7 @@ func main() {
 	if err != nil {
 		log.Fatal("Db connect faild!")
 	}
-
+	defer db.Close()
 	rows, err := db.Query("SELECT user, role, domain FROM t_services_tree_user_role_domain WHERE user=?", 752)
 	if err != nil {
 		log.Fatal("Query faild!")
@@ -25,7 +25,6 @@ func main() {
 		}
 		fmt.Printf("User: %v, Role: %v, Domain: %v\n", user, role, domain)
 	}
-
 
 	row := db.QueryRow("SELECT user, role, domain FROM t_services_tree_user_role_domain WHERE id=?", 597)
 	var user, role, domain int
