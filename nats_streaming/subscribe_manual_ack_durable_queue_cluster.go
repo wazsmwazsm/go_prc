@@ -48,7 +48,7 @@ func main() {
 		ch <- m
 	}
 	// queue Durable subscribe
-	// queue 的模式下，由于 server 会 pending 未 ack 的 subscriber 等待重新交付
+	// queue 的模式下，由于 server 会 pending 未 ack 的 subscriber 连接等待重新交付
 	// 所以没有办法保证整个 queue 的消费数据是顺序的
 	sub, err := sc.QueueSubscribe(ChannelName, QueueName, msgHandler,
 		stan.DurableName(DurableName),
@@ -68,9 +68,9 @@ func main() {
 			fmt.Printf("channel: %s, seq: %v, time: %v, msg: %s\n", m.Subject, m.Sequence, m.Timestamp, m.Data)
 		case s := <-c:
 			fmt.Println(s)
-			// 捕捉到信号后，执行 defer，显示关闭 subscriber（否则 server 会认为 subscriber 没有关闭
-			// ，发送还会发到该 subscriber 上，只是没有 ack，会 pending 在 server，直到 server 决定
-			// 关闭该 subscriber，pending 的数据才会重新交付给其它 subscriber 上）
+			// 捕捉到信号后，执行 defer，显示关闭 subscriber 或 sc 连接（否则 server 会认为 subscriber 连接没有关闭
+			// ，发送还会发到该 subscriber 连接上，只是没有 ack，会 pending 在 server，直到 server 判定失活
+			// 关闭该 subscriber 连接，pending 的数据才会重新交付给其它 subscriber 上）
 			return
 		}
 	}
