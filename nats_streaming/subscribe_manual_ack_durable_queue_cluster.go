@@ -41,6 +41,7 @@ func main() {
 
 	ch := make(chan *stan.Msg)
 	msgHandler := func(m *stan.Msg) {
+		// ack 前可以拿到消息，消费方可以确定消费逻辑成功后再 ack
 		// 加入一个延迟, 开启手动 ack, 模拟 queue 模式中不同消费者可能 ack
 		// 次序不同导致 queue 中的消息被消费无法保证时间次序的场景
 		time.Sleep(time.Duration(*sleep) * time.Second)

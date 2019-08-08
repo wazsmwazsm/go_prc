@@ -20,14 +20,17 @@ func main() {
 
 	options := []stan.SubscriptionOption{
 		stan.DurableName("my-durable"),
-		stan.AckWait(20 * time.Second),
 		stan.SetManualAckMode(),
 	}
 
 	ch := make(chan stan.Msg)
 	// Durable subscribe
 	sub, err := sc.Subscribe("foo", func(m *stan.Msg) {
-		m.Ack() // 手动 ack, 更安全, 可以保证在业务完成后 ack, 出错则关闭连接, 下次 redelivery
+		fmt.Printf("响应前可以拿到消息, 但是 server 还不知道已经交付: %s %v %v %s\n", m.Subject, m.Sequence, m.Timestamp, m.Data)
+		// 手动 ack, 更安全, 可以保证在业务完成后 ack, 出错则关闭连接, 下次再 redelivery，
+		// 这样可以在处理一些逻辑后再 ack，保证这次消息和消费是原子操作。
+		time.Sleep(time.Second * 3)
+		m.Ack()
 		ch <- *m
 	}, options...)
 	if err != nil {
