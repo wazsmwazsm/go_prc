@@ -1,4 +1,4 @@
-// yield 惰性生成器模式, 每次读取时才生成
+// yield 惰性生成器模式(迭代器), 每次读取时才生成
 package main
 
 import (
