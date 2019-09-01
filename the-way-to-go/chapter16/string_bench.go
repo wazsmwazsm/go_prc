@@ -11,7 +11,7 @@ func main() {
 	fmt.Printf(" benchBuffer: \n", testing.Benchmark(benchBuffer).String())
 }
 
-// 导致大量的内存开销和拷贝
+// 字符串是不可变类型， + 会导致大量的内存开销和拷贝
 func benchPlus(b *testing.B) {
 	str := ""
 	for i := 0; i < b.N; i++ {
@@ -19,7 +19,7 @@ func benchPlus(b *testing.B) {
 	}
 }
 
-// 最快
+// 直接操作字符数组，最快
 func benchBuffer(b *testing.B) {
 	buf := new(bytes.Buffer)
 	for i := 0; i < b.N; i++ {
