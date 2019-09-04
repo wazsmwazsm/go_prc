@@ -4,10 +4,6 @@ import (
 	"fmt"
 )
 
-func badCall() {
-	panic("bad end")
-}
-
 func main() {
 	fmt.Printf("Calling test\r\n")
 	test()
@@ -21,6 +17,6 @@ func test() {
 		}
 	}()
 
-	badCall()
+	panic("bad test !!")
 	fmt.Printf("After bad call\r\n") // <-- wordt niet bereikt
 }
