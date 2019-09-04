@@ -20,8 +20,12 @@ func test() {
 			fmt.Printf("Panicing %s\r\n", e)
 		}
 	}()
-
-	// go badCall() // 如果产生 panic 的程序以另一个 gorouting 运行，则捕捉不到
+	// 如果产生 panic 的程序以另一个 gorouting 运行，则捕捉不到
+	// 因为虽然 badCall 在 test 中启动，但每个 gorouting 都单独运行，
+	// 都受控于 main gorouting, 所以 badCall gorouting panic 后在
+	//  test 的 defer 是不会走到的，会直接 panic 到 main gorouting，
+	// 导致程序崩溃, 所以正确方式应该在启动 gorouting 时做捕捉
+	// go badCall()
 	// 正确的方式
 	go func() {
 		defer func() {
