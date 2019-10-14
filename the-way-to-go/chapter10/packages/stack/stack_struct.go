@@ -1,13 +1,15 @@
 package stack
 
+// 此栈非并发安全
 import (
 	"errors"
 	"strconv"
 )
+
 // 顺序栈
 type stack struct {
 	index int
-	arr stackArr
+	arr   stackArr
 }
 
 func NewStack() *stack {
@@ -21,7 +23,7 @@ func (s *stack) String() string {
 	str = "Stack head: " + strconv.Itoa(s.index) + " Stack Field: "
 	for i := 0; i < LIMIT; i++ {
 		str += "[" + strconv.Itoa(s.arr[i]) + "]"
-	} 
+	}
 
 	return str
 }
@@ -35,7 +37,7 @@ func (s *stack) IsEmpty() bool {
 }
 
 func (s *stack) IsFull() bool {
-	if s.index == LIMIT - 1 {
+	if s.index == LIMIT-1 {
 		return true
 	}
 
@@ -43,7 +45,7 @@ func (s *stack) IsFull() bool {
 }
 
 func (s *stack) Pop() (int, error) {
-	if ! s.IsEmpty() {
+	if !s.IsEmpty() {
 		popItem := s.arr[s.index]
 		s.arr[s.index] = 0
 		s.index--
@@ -55,12 +57,12 @@ func (s *stack) Pop() (int, error) {
 }
 
 func (s *stack) Push(item int) error {
-	if ! s.IsFull() {
+	if !s.IsFull() {
 		s.index++
 		s.arr[s.index] = item
 
 		return nil
-	} 
+	}
 
 	return errors.New("Statck is full!")
 }
