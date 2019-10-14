@@ -1,5 +1,9 @@
 package tree
 
+import (
+	"dirtree/stack"
+)
+
 // Node tree node
 type Node struct {
 	ID       int
@@ -29,4 +33,28 @@ func GenTree(nodes Nodes) Nodes {
 	}
 
 	return tree
+}
+
+// FindNode find node by ID
+func FindNode(tree Nodes, id int) *Node {
+	stk := stack.NewStack()
+	for _, node := range tree {
+		stk.Push(node)
+	}
+
+	for stk.GetLen() != 0 {
+		tmpNode := stk.Pop().(*Node)
+
+		if tmpNode.ID == id {
+			return tmpNode
+		}
+
+		if tmpNode.Children != nil {
+			for _, child := range tmpNode.Children {
+				stk.Push(child)
+			}
+		}
+	}
+
+	return new(Node)
 }

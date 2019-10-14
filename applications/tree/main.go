@@ -17,8 +17,12 @@ func main() {
 		{ID: 7, Pid: 3, Title: "ff"},
 	}
 
-	tree := tree.GenTree(nodes)
+	t := tree.GenTree(nodes)
 
-	treeJson, _ := json.Marshal(tree)
-	fmt.Printf("%s", treeJson)
+	treeJson, _ := json.Marshal(t)
+	fmt.Printf("%s\n", treeJson)
+
+	node := tree.FindNode(t, 4)
+	nodeJson, _ := json.Marshal(node)
+	fmt.Printf("%s\n", nodeJson)
 }
