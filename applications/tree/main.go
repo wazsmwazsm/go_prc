@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	nodes := tree.Nodes{
+	nodes := []*tree.Node{
 		{ID: 1, Pid: 0, Title: "root"},
 		{ID: 2, Pid: 1, Title: "aa"},
 		{ID: 3, Pid: 1, Title: "bb"},
@@ -17,12 +17,16 @@ func main() {
 		{ID: 7, Pid: 3, Title: "ff"},
 	}
 
-	t := tree.GenTree(nodes)
+	t := tree.NewTree(nodes)
+	root := t.GetRoot()
+	treeJSON, _ := json.Marshal(root)
+	fmt.Printf("%s\n", treeJSON)
 
-	treeJson, _ := json.Marshal(t)
-	fmt.Printf("%s\n", treeJson)
+	node := t.FindNode(7)
+	nodeJSON, _ := json.Marshal(node)
+	fmt.Printf("%s\n", nodeJSON)
 
-	node := tree.FindNode(t, 4)
-	nodeJson, _ := json.Marshal(node)
-	fmt.Printf("%s\n", nodeJson)
+	path := t.GetPathBetweenNode(1, 3)
+	pathJSON, _ := json.Marshal(path)
+	fmt.Printf("%s\n", pathJSON)
 }

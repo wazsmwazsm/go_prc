@@ -1,49 +1,58 @@
 package tree
 
-import (
-	"dirtree/stack"
-)
-
 // Node tree node
 type Node struct {
 	ID       int
 	Pid      int
 	Title    string
-	IsLeaf   bool
+	parent   *Node
 	Children []*Node
 }
 
-// Nodes tree nodes
-type Nodes []*Node
+// Tree multi tree
+type Tree struct {
+	nodes   []*Node
+	nodeMap map[int]*Node
+	root    *Node
+}
 
-// GenTree generate tree
-func GenTree(nodes Nodes) Nodes {
-	tree := Nodes{}
+// NewTree create tree
+func NewTree(nodes []*Node) *Tree {
+	var root *Node
 	nodeMap := make(map[int]*Node)
 	for _, node := range nodes {
 		nodeMap[node.ID] = node
 	}
+
 	for key, node := range nodeMap {
 		if pnode, ok := nodeMap[node.Pid]; ok {
 			pnode.Children = append(pnode.Children, node)
-			pnode.IsLeaf = true
+			node.parent = pnode
 		} else {
-			tree = append(tree, nodeMap[key])
+			root = nodeMap[key]
 		}
 	}
 
-	return tree
+	return &Tree{
+		nodes:   nodes,
+		nodeMap: nodeMap,
+		root:    root,
+	}
 }
 
-// FindNode find node by ID
-func FindNode(tree Nodes, id int) *Node {
-	stk := stack.NewStack()
-	for _, node := range tree {
-		stk.Push(node)
-	}
+// GetRoot get root
+func (t *Tree) GetRoot() *Node {
+	return t.root
+}
 
-	for stk.GetLen() != 0 {
-		tmpNode := stk.Pop().(*Node)
+// FindNode find node by ID (bfs)
+func (t *Tree) FindNode(id int) *Node {
+	queue := []*Node{}
+	queue = append(queue, t.root)
+
+	for len(queue) != 0 {
+		tmpNode := queue[0]
+		queue = queue[1:]
 
 		if tmpNode.ID == id {
 			return tmpNode
@@ -51,10 +60,47 @@ func FindNode(tree Nodes, id int) *Node {
 
 		if tmpNode.Children != nil {
 			for _, child := range tmpNode.Children {
-				stk.Push(child)
+				queue = append(queue, child)
 			}
 		}
 	}
 
-	return new(Node)
+	return nil
+}
+
+// FindPNode find parent node by ID (bfs)
+func (t *Tree) FindPNode(id int) *Node {
+
+	if node := t.FindNode(id); node != nil {
+		return node.parent
+	}
+
+	return nil
+}
+
+// func (t *Tree) GetPath(id int) (root *Node) {
+
+// }
+
+func (t *Tree) GetPathBetweenNode(fromID, toID int) Node {
+
+	toNode, ok := t.nodeMap[toID]
+	if !ok {
+		return Node{}
+	}
+
+	pid := toNode.Pid
+	currNode := toNode
+	for pid != fromID {
+
+		pnode, ok := t.nodeMap[pid]
+		if !ok {
+			return *pnode
+		}
+
+		pnode.Children = append(pnode.Children, currNode)
+		currNode = pnode
+	}
+
+	return *currNode
 }
