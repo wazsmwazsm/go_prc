@@ -1,5 +1,9 @@
 package tree
 
+// import (
+// 	"fmt"
+// )
+
 // Node tree node
 type Node struct {
 	ID       int
@@ -11,30 +15,26 @@ type Node struct {
 
 // Tree multi tree
 type Tree struct {
-	nodes   []*Node
 	nodeMap map[int]*Node
 	root    *Node
 }
 
 // NewTree create tree
 func NewTree(nodes []*Node) *Tree {
-	var root *Node
+	root := &Node{ID: 0, Pid: -1, Title: "root"}
+	nodes = append(nodes, root)
 	nodeMap := make(map[int]*Node)
 	for _, node := range nodes {
 		nodeMap[node.ID] = node
 	}
 
-	for key, node := range nodeMap {
+	for _, node := range nodeMap {
 		if pnode, ok := nodeMap[node.Pid]; ok {
 			pnode.Children = append(pnode.Children, node)
 			node.parent = pnode
-		} else {
-			root = nodeMap[key]
 		}
 	}
-
 	return &Tree{
-		nodes:   nodes,
 		nodeMap: nodeMap,
 		root:    root,
 	}
@@ -45,19 +45,55 @@ func (t *Tree) GetRoot() *Node {
 	return t.root
 }
 
-// FindNode find node by ID (bfs)
-func (t *Tree) FindNode(id int) *Node {
+// Find find node by ID
+func (t *Tree) Find(id int) *Node {
+	if node, ok := t.nodeMap[id]; ok {
+		return node
+	}
+
+	return nil
+}
+
+// FindParent find parent node by ID (bfs)
+func (t *Tree) FindParent(id int) *Node {
+
+	if node := t.Find(id); node != nil {
+		return node.parent
+	}
+
+	return nil
+}
+
+// FindChildrens find children nodes by ID
+func (t *Tree) FindChildrens(id int) []*Node {
+
+	if node := t.Find(id); node != nil {
+		return node.Children
+	}
+
+	return nil
+}
+
+// GetSubNodes get sub nodes (contain itself) flat by ID (bfs)
+func (t *Tree) GetSubNodes(id int) []*Node {
+	subs := []*Node{}
+	node := t.Find(id)
+	if node == nil {
+		return subs
+	}
+
 	queue := []*Node{}
-	queue = append(queue, t.root)
+	queue = append(queue, node)
 
 	for len(queue) != 0 {
 		tmpNode := queue[0]
 		queue = queue[1:]
-
-		if tmpNode.ID == id {
-			return tmpNode
-		}
-
+		subs = append(subs, &Node{
+			ID:       tmpNode.ID,
+			Pid:      tmpNode.Pid,
+			Title:    tmpNode.Title,
+			Children: []*Node{},
+		})
 		if tmpNode.Children != nil {
 			for _, child := range tmpNode.Children {
 				queue = append(queue, child)
@@ -65,42 +101,30 @@ func (t *Tree) FindNode(id int) *Node {
 		}
 	}
 
-	return nil
+	return subs
 }
 
-// FindPNode find parent node by ID (bfs)
-func (t *Tree) FindPNode(id int) *Node {
+// GetNodeChain get nodes chain flat between node1 to node2
+func (t *Tree) GetNodeChain(fromID, toID int) []*Node {
 
-	if node := t.FindNode(id); node != nil {
-		return node.parent
-	}
+	chain := []*Node{}
+	toNode := t.Find(toID)
 
-	return nil
-}
-
-// func (t *Tree) GetPath(id int) (root *Node) {
-
-// }
-
-func (t *Tree) GetPathBetweenNode(fromID, toID int) Node {
-
-	toNode, ok := t.nodeMap[toID]
-	if !ok {
-		return Node{}
-	}
-
-	pid := toNode.Pid
 	currNode := toNode
-	for pid != fromID {
+	for currNode != nil {
+		chain = append(chain, &Node{
+			ID:       currNode.ID,
+			Pid:      currNode.Pid,
+			Title:    currNode.Title,
+			Children: []*Node{},
+		})
 
-		pnode, ok := t.nodeMap[pid]
-		if !ok {
-			return *pnode
+		if currNode.ID == fromID {
+			return chain // end
 		}
-
-		pnode.Children = append(pnode.Children, currNode)
+		pnode := currNode.parent
 		currNode = pnode
 	}
 
-	return *currNode
+	return []*Node{} // path doesn't exist
 }
