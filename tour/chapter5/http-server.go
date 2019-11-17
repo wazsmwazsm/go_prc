@@ -19,12 +19,12 @@ func serverInfo(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("key:", k)
 		fmt.Println("val:", strings.Join(v, ""))
 	}
-	fmt.Fprintf(w, "Hello astaxie!") // 输出到客户端的信息
+	fmt.Fprintf(w, "Hello astaxieaaaaaaaaaaaaaaa!") // 输出到客户端的信息
 }
 
 func main() {
 	http.HandleFunc("/", serverInfo)
-	err := http.ListenAndServe(":4000", nil)
+	err := http.ListenAndServe(":8081", nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
