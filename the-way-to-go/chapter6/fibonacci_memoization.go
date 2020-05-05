@@ -1,4 +1,5 @@
 // 在递归时使用保存之前计算结果的方式来提升效率，其实使用闭包的话已经能达到这个要求
+// DP 思想，将重叠计算的子问题结构保存起来
 // 这个只是为了演示，为了递归提升效率去做，实际项目请用闭包方式
 package main
 
@@ -9,6 +10,7 @@ import (
 
 // 演示中计算 41 位
 const LIM = 41
+
 // 用来保存计算结果
 var fibs [LIM]uint64
 
@@ -32,7 +34,7 @@ func fibonacci(n int) (res uint64) {
 	if n <= 1 {
 		res = 1
 	} else {
-		res = fibonacci(n - 1) + fibonacci(n - 2)
+		res = fibonacci(n-1) + fibonacci(n-2)
 	}
 	// 保存计算结果
 	fibs[n] = res
